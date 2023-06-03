@@ -1,0 +1,45 @@
+﻿1. What's my name
+   a. John
+   b. Bob
+   c. Aarav
+   d. Gabe
+2. Whats my last name: 
+   a. Jack
+   b. Bob
+   c. Something
+   d. Jain
+3. Question 1 
+   a. Right
+   b. Wrong1
+   c. Wrong2
+   d. Wrong3
+4. Question 2
+   a. Wrong1
+   b. Right
+   c. Wrong2.
+   d. Wrong3 
+5. Some other question
+   a. Stuff
+   b. bob(right) 
+   c. Whatever
+   d. Ur mom
+6. Who won the world cup
+   a. Brazil
+   b. Germany
+   c. Argentina
+   d. Croatia
+7. Who is the goat: 
+   a. Messi
+   b. Ronaldo
+   c. Maradona
+   d. Pele
+8. Where is my cookie
+   a. China
+   b. My bedroom
+   c. Belgium
+   d. The Kitchen
+9. Who won the FA Cup
+   a. Man City
+   b. Liverpool
+   c. Wrexham
+   d. Man united

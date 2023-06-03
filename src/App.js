@@ -1,22 +1,21 @@
 import { Input, Text, Button } from "@chakra-ui/react";
 import "./App.css";
-
+import JSZip from "jszip";
 import React, { useState } from "react";
-
+import { saveAs } from "file-saver";
+import AnswerKey from "./AnswerKeys";
 function App() {
   const [questions, setQuestions] = useState([]);
-
+  let files = [];
+  const [copies, setCopies] = useState(1);
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     console.log(file);
     const reader = new FileReader();
-
-    reader.onload = (e) => {
+    reader.onload = async (e) => {
       const contents = e.target.result;
-      const parsedQuestions = parseTestFile(contents);
-      // setQuestions(parsedQuestions);
+      await parseTestFile(contents);
     };
-
     reader.readAsText(file);
   };
 
@@ -26,7 +25,7 @@ function App() {
     const questionRegex = /^\d+\.\s.*$/;
     const choiceRegex = /^[a-d]\.\s.*$/;
     let currentQuestion = null;
-
+    let newQuestions = [];
     let choices = [];
     for (let line of lines) {
       line = line.trim();
@@ -52,7 +51,9 @@ function App() {
             Question: currentQuestion,
             choices: choices,
           };
-          questions.push(QuestionObj);
+
+          newQuestions.push(QuestionObj);
+
           choices = [];
           currentQuestion = line;
         }
@@ -60,10 +61,12 @@ function App() {
         choices.push(line);
       }
     }
-    questions.push({
+
+    newQuestions.push({
       Question: currentQuestion,
       choices: choices,
     });
+    setQuestions(newQuestions);
   };
 
   const changeTheOrder = (questions) => {
@@ -84,27 +87,68 @@ function App() {
     let text = "";
 
     for (let i = 0; i < questions.length; i++) {
-      console.log(questions[i]);
+      // console.log(questions[i]);
       text += `${i + 1}. ${questions[i].Question}\n`;
-
+      questions[i].choices = changeTheOrder(questions[i].choices);
       for (let j = 0; j < questions[i].choices.length; j++) {
         text +=
-          "\t" +
+          " " +
           String.fromCharCode(65 + j) +
           ". " +
           questions[i].choices[j] +
           "\n";
       }
     }
-    const filename = "test2.txt";
+    console.log(text);
+    // const filename = "test2.txt";
     console.log("Created");
-    const element = document.createElement("a");
-    const file = new Blob([text], { type: "text/plain" });
+    // const element = document.createElement("a");
+    // const file = new Blob([text], { type: "text/plain" });
+    // element.href = URL.createObjectURL(file);
+    // element.download = filename;
+    // document.body.appendChild(element);
+    console.log(text);
+    files.push(text);
+  };
+
+  const onButtonClick = () => {
+    console.log(copies);
+    let zip = new JSZip();
+
+    for (let i = 0; i < copies; i++) {
+      createFile(questions);
+    }
+    for (let i = 0; i < files.length; i++) {
+      zip.file(`test${i + 2}.txt`, files[i]);
+    }
+    console.log(files);
+    zip.generateAsync({ type: "blob" }).then(function (content) {
+      saveAs(content, "tests.zip");
+    });
   };
   return (
     <div>
       <Text fontSize="6xl">Test Parser</Text>
-      <Input type="file" placehodler="Test" onChange={handleFileUpload} />
+      <Input
+        label="Test File: "
+        type="file"
+        placehodler="Test"
+        onChange={handleFileUpload}
+      />
+      <AnswerKey />
+      <Input
+        label="Copies: "
+        type="number"
+        min="1"
+        max="6"
+        onChange={(e) => {
+          setCopies(e.target.value);
+          console.log(copies);
+        }}
+        value={copies}
+      />
+
+      <Button onClick={onButtonClick}>Submit</Button>
     </div>
   );
 }
