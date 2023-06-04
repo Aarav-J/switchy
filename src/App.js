@@ -5,6 +5,7 @@ import React, { useEffect, useState, useTimeout } from "react";
 import { saveAs } from "file-saver";
 import AnswerKey from "./AnswerKeys";
 import { useTest } from "./TestContext";
+import InfoModal from "./InfoModal";
 
 function App() {
   let { questionFiles, answerFiles } = useTest();
@@ -122,9 +123,10 @@ function App() {
   return (
     <div className="body">
       <div className="App">
-        <Text className="Text" fontSize="6xl">
+        <Text decoration="aliceblue" className="Text" fontSize="6xl">
           Shuffly
         </Text>
+        <InfoModal />
         <label htmlFor="testFile">Upload Test File: </label>
         <Input
           name="testFile"
