@@ -1,6 +1,8 @@
 import { Input } from "@chakra-ui/react";
+import { useTest } from "./TestContext";
 const AnswerKey = () => {
-  let answers = [];
+  const { questions, setQuestions } = useTest();
+  let { answers } = useTest();
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     console.log(file);
@@ -18,6 +20,17 @@ const AnswerKey = () => {
       line.replace(" ", "");
       answers.push(line.substring(line.indexOf(".") + 1));
     }
+    let newQuestions = [];
+    let i = 0;
+    for (let question of questions) {
+      newQuestions.push({
+        Question: question.Question,
+        choices: question.choices,
+        answer: answers[i],
+      });
+      i++;
+    }
+    setQuestions(newQuestions);
   };
   return (
     <Input
