@@ -1,4 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react";
+import getResponse from "./chatgpt";
 
 const TestContext = createContext();
 
@@ -21,8 +22,27 @@ export const TestProvider = ({ children }) => {
     console.log(questions);
   }, [questions]);
 
-  const createFiles = (questions) => {
-    let codeQuestions = changeTheOrder(questions);
+  const generateNewQuestions = async (questions) => {
+    let codeQuestions = questions;
+    let i = 0;
+    for (let question of questions) {
+      // const newQuestion = getResponse(question.Question);
+      const newObj = {
+        Question:
+          i % 2 === 0
+            ? await getResponse(question.Question)
+            : question.Question,
+        choices: question.choices,
+        answer: question.answer,
+      };
+      console.log(i, newObj);
+      codeQuestions[i] = newObj;
+      i++;
+    }
+    return codeQuestions;
+  };
+  const createFiles = async (questions) => {
+    let codeQuestions = changeTheOrder(await generateNewQuestions(questions));
     console.log(questions);
     let text = "";
 

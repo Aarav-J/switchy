@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { saveAs } from "file-saver";
 import AnswerKey from "./AnswerKeys";
 import { useTest } from "./TestContext";
+import getResponse from "./chatgpt.js";
 function App() {
   let { questionFiles, answerFiles } = useTest();
 
@@ -70,12 +71,17 @@ function App() {
     setQuestions(newQuestions);
   };
 
-  const onButtonClick = () => {
+  const onButtonClick = async () => {
     let zip = new JSZip();
 
-    for (let i = 0; i < copies; i++) {
-      createFiles(questions);
-    }
+    // for (let i = 0; i < copies; i++) {
+    //   await Promise.all[createFiles(questions)];
+    // }
+    await Promise.all(
+      Array(copies)
+        .fill()
+        .map(() => createFiles(questions))
+    );
     for (let i = 0; i < questionFiles.length; i++) {
       let folder = zip.folder(`test${i + 2}`);
       let text = "Version: " + (i + 2) + "\n";

@@ -1,45 +1,59 @@
-﻿1. What's my name
-   a. John
-   b. Bob
-   c. Aarav
-   d. Gabe
-2. Whats my last name: 
-   a. Jack
-   b. Bob
-   c. Something
-   d. Jain
-3. Question 1 
-   a. Right
-   b. Wrong1
-   c. Wrong2
-   d. Wrong3
-4. Question 2
-   a. Wrong1
-   b. Right
-   c. Wrong2.
-   d. Wrong3 
-5. Some other question
-   a. Stuff
-   b. bob(right) 
-   c. Whatever
-   d. Ur mom
-6. Who won the world cup
-   a. Brazil
-   b. Germany
-   c. Argentina
-   d. Croatia
-7. Who is the goat: 
-   a. Messi
-   b. Ronaldo
-   c. Maradona
-   d. Pele
-8. Where is my cookie
-   a. China
-   b. My bedroom
-   c. Belgium
-   d. The Kitchen
-9. Who won the FA Cup
-   a. Man City
-   b. Liverpool
-   c. Wrexham
-   d. Man united
+﻿1.What is the chemical symbol for iron?
+ a. Fe
+ b. Ir
+ c. In
+ d. Io
+
+2. Who painted the famous artwork "Starry Night"?
+ a. Leonardo da Vinci
+ b. Vincent van Gogh
+ c. Pablo Picasso
+ d. Claude Monet
+
+3. What is the largest planet in our solar system?
+ a. Jupiter
+ b. Saturn
+ c. Mars
+ d. Earth
+
+4. Who wrote the play "Romeo and Juliet"?
+ a. William Shakespeare
+ b. Oscar Wilde
+ c. Jane Austen
+ d. Mark Twain
+
+5. Which country is known as the "Land of the Rising Sun"?
+ a. China
+ b. Japan
+ c. Australia
+ d. India
+
+6. What is the chemical formula for water?
+ a. CO2
+ b. H2O
+ c. NaCl
+ d. O2
+
+7. Who is credited with the theory of general relativity?
+ a. Isaac Newton
+ b. Albert Einstein
+ c. Galileo Galilei
+ d. Nikola Tesla
+
+8. Which continent is home to the Great Barrier Reef?
+ a. Africa
+ b. Europe
+ c. Australia
+ d. South America
+
+9. What is the capital city of Canada?
+ a. Toronto
+ b. Ottawa
+ c. Vancouver
+ d. Montreal
+
+10. Who is the author of the Harry Potter book series?
+ a. J.K. Rowling
+ b. Stephen King
+ c. George R.R. Martin
+ d. Dan Brown
