@@ -1,10 +1,11 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 
 const TestContext = createContext();
 
 export const TestProvider = ({ children }) => {
-  let files = [];
+  let questionFiles = [];
   let answers = [];
+  let answerFiles = [];
   const [questions, setQuestions] = useState([]);
   const changeTheOrder = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -16,18 +17,43 @@ export const TestProvider = ({ children }) => {
     console.log(array);
     return array;
   };
+  useEffect(() => {
+    console.log(questions);
+  }, [questions]);
 
-  const createQuestionFile = (questions) => {
-    questions = changeTheOrder(questions);
+  const createFiles = (questions) => {
+    let codeQuestions = changeTheOrder(questions);
     console.log(questions);
     let text = "";
 
-    for (let i = 0; i < questions.length; i++) {
-      text += `${i + 1}. ${questions[i].Question}\n`;
+    for (let i = 0; i < codeQuestions.length; i++) {
+      text += `${i + 1}. ${codeQuestions[i].Question}\n`;
       //   const answer =
-      // questions[i].choices[questions[i].answer.charCodeAt(0) - 65];
-      console.log(questions[i].answer.charCodeAt(0));
-      questions[i].choices = changeTheOrder(questions[i].choices);
+      const answer =
+        codeQuestions[i].choices[codeQuestions[i].answer.charCodeAt(0) - 65];
+      console.log(answer);
+
+      codeQuestions[i].choices = changeTheOrder(codeQuestions[i].choices);
+
+      const choices = codeQuestions[i].choices;
+      let j = 0;
+      for (let choice of choices) {
+        if (choice === answer) {
+          console.log(choices);
+          console.log(choice, answer, j);
+          const newQuestionObj = {
+            Question: questions[i].Question,
+            choices: questions[i].choices,
+            answer: String.fromCharCode(65 + j),
+          };
+          console.log(newQuestionObj);
+
+          codeQuestions[i] = newQuestionObj;
+          console.log(codeQuestions);
+        }
+        j++;
+      }
+      setQuestions(codeQuestions);
       for (let j = 0; j < questions[i].choices.length; j++) {
         text +=
           " " +
@@ -38,24 +64,23 @@ export const TestProvider = ({ children }) => {
       }
     }
 
-    // const filename = "test2.txt";
-
-    // const element = document.createElement("a");
-    // const file = new Blob([text], { type: "text/plain" });
-    // element.href = URL.createObjectURL(file);
-    // element.download = filename;
-    // document.body.appendChild(element);
+    let answerText = "";
+    let i = 0;
+    for (const question of questions) {
+      answerText += `${i + 1}. ${question.answer}\n`;
+      i++;
+    }
+    answerFiles.push(answerText);
+    console.log(questions);
     console.log(text);
-    files.push(text);
+    questionFiles.push(text);
   };
-  const setAnswers = (answers) => {
-    this.answers = answers;
-  };
+
   const value = {
-    files,
+    questionFiles,
     answers,
-    setAnswers: (answers) => setAnswers(answers),
-    createQuestionFile: (questions) => createQuestionFile(questions),
+    answerFiles,
+    createFiles: (questions) => createFiles(questions),
     questions,
     setQuestions: (questions) => setQuestions(questions),
   };

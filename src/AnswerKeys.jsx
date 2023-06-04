@@ -17,8 +17,7 @@ const AnswerKey = () => {
     const lines = content.split("\n");
     for (let line of lines) {
       line = line.trim();
-      line.replace(" ", "");
-      answers.push(line.substring(line.indexOf(".") + 1));
+      answers.push(line[line.length - 1]);
     }
     let newQuestions = [];
     let i = 0;

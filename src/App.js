@@ -6,9 +6,9 @@ import { saveAs } from "file-saver";
 import AnswerKey from "./AnswerKeys";
 import { useTest } from "./TestContext";
 function App() {
-  let { files } = useTest();
+  let { questionFiles, answerFiles } = useTest();
 
-  const { createQuestionFile } = useTest();
+  const { createFiles } = useTest();
   const { questions, setQuestions } = useTest();
   const [copies, setCopies] = useState(1);
   const handleFileUpload = (event) => {
@@ -74,10 +74,13 @@ function App() {
     let zip = new JSZip();
 
     for (let i = 0; i < copies; i++) {
-      createQuestionFile(questions);
+      createFiles(questions);
     }
-    for (let i = 0; i < files.length; i++) {
-      zip.file(`test${i + 2}.txt`, files[i]);
+    for (let i = 0; i < questionFiles.length; i++) {
+      let folder = zip.folder(`test${i + 2}`);
+      let text = "Version: " + (i + 2) + "\n";
+      folder.file(`answer${i + 2}.txt`, text + answerFiles[i]);
+      folder.file(`test${i + 2}.txt`, text + questionFiles[i]);
     }
 
     zip.generateAsync({ type: "blob" }).then(function (content) {
