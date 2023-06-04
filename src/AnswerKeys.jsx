@@ -38,7 +38,7 @@ const AnswerKey = () => {
         id="answerFile"
         name="answerFile"
         accept=".txt"
-        className="Input"
+        className="Input custom-file-input"
         label="Test File: "
         type="file"
         placehodler="Test"

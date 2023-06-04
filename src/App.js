@@ -132,7 +132,7 @@ function App() {
           name="testFile"
           id="testFile"
           accept=".txt"
-          className="Input"
+          className="Input custom-file-input"
           label="Test File: "
           type="file"
           placehodler="Test"
