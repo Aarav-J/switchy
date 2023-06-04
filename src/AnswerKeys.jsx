@@ -32,12 +32,19 @@ const AnswerKey = () => {
     setQuestions(newQuestions);
   };
   return (
-    <Input
-      label="Test File: "
-      type="file"
-      placehodler="Test"
-      onChange={handleFileUpload}
-    />
+    <>
+      <label htmlFor="answerFile">Upload Answer Key: </label>
+      <Input
+        id="answerFile"
+        name="answerFile"
+        accept=".txt"
+        className="Input"
+        label="Test File: "
+        type="file"
+        placehodler="Test"
+        onChange={handleFileUpload}
+      />
+    </>
   );
 };
 export default AnswerKey;

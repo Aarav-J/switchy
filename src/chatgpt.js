@@ -12,18 +12,27 @@ const getResponse = async(question) => {
     messages: [
       {
         role: 'system',
-        content: 'You are supposed to rephrase test questions',
+        content: 'You are supposed to rephrase the following sentence:',
       },
       {
         role: 'user',
-        content: 'Rephrase the following: What is the capital of France?',
+        content: 'What is the capital of France?',
       },
       {
         role: 'assistant',
         content: 'Which city serves as the capital of France?',
       },
-      {role: 'user', content: `${question}`},
+      {
+        role: 'user',
+        content: 'What is the capital of France?',
+      },
+      {
+        role: 'assistant',
+        content: 'Which city is designated as the capital of France?'
+      },
+      {role: 'user', content: `another way to rephrase: ${question}`},
     ],
+    temperature: 0.9,
   };
   const res = await openai.createChatCompletion(complete_options)
   console.log(res);

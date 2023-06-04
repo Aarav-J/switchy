@@ -1,59 +1,45 @@
-﻿1.What is the chemical symbol for iron?
- a. Fe
- b. Ir
- c. In
- d. Io
-
+﻿1. What is the chemical symbol for iron?
+    a. Fe
+    b. Ir
+    c. In
+    d. Io
 2. Who painted the famous artwork "Starry Night"?
- a. Leonardo da Vinci
- b. Vincent van Gogh
- c. Pablo Picasso
- d. Claude Monet
-
+    a. Leonardo da Vinci
+    b. Vincent van Gogh
+    c. Pablo Picasso
+    d. Claude Monet
 3. What is the largest planet in our solar system?
- a. Jupiter
- b. Saturn
- c. Mars
- d. Earth
-
+    a. Jupiter
+    b. Saturn
+    c. Mars
+    d. Earth
 4. Who wrote the play "Romeo and Juliet"?
- a. William Shakespeare
- b. Oscar Wilde
- c. Jane Austen
- d. Mark Twain
-
+    a. William Shakespeare
+    b. Oscar Wilde
+    c. Jane Austen
+    d. Mark Twain
 5. Which country is known as the "Land of the Rising Sun"?
- a. China
- b. Japan
- c. Australia
- d. India
-
+    a. China
+    b. Japan
+    c. Australia
+    d. India
 6. What is the chemical formula for water?
- a. CO2
- b. H2O
- c. NaCl
- d. O2
-
+    a. CO2
+    b. H2O
+    c. NaCl
+    d. O2
 7. Who is credited with the theory of general relativity?
- a. Isaac Newton
- b. Albert Einstein
- c. Galileo Galilei
- d. Nikola Tesla
-
+    a. Isaac Newton
+    b. Albert Einstein
+    c. Galileo Galilei
+    d. Nikola Tesla
 8. Which continent is home to the Great Barrier Reef?
- a. Africa
- b. Europe
- c. Australia
- d. South America
-
-9. What is the capital city of Canada?
- a. Toronto
- b. Ottawa
- c. Vancouver
- d. Montreal
-
-10. Who is the author of the Harry Potter book series?
- a. J.K. Rowling
- b. Stephen King
- c. George R.R. Martin
- d. Dan Brown
+    a. Africa
+    b. Europe
+    c. Australia
+    d. South America
+9. Who is the author of the Harry Potter book series?
+    a. J.K. Rowling
+    b. Stephen King
+    c. George R.R. Martin
+    d. Dan Brown

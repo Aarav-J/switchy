@@ -7,6 +7,7 @@ export const TestProvider = ({ children }) => {
   let questionFiles = [];
   let answers = [];
   let answerFiles = [];
+  const [checked, setChecked] = useState(0);
   const [questions, setQuestions] = useState([]);
   const changeTheOrder = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -42,10 +43,18 @@ export const TestProvider = ({ children }) => {
     return codeQuestions;
   };
   const createFiles = async (questions) => {
-    let codeQuestions = changeTheOrder(await generateNewQuestions(questions));
+    let codeQuestions;
+    if (checked === 1) {
+      console.log("checked");
+      codeQuestions = changeTheOrder(await generateNewQuestions(questions));
+    } else {
+      console.log("not checked");
+      codeQuestions = changeTheOrder(questions);
+    }
+
     console.log(questions);
     let text = "";
-
+    console.log("Code Questions: " + JSON.stringify(codeQuestions));
     for (let i = 0; i < codeQuestions.length; i++) {
       text += `${i + 1}. ${codeQuestions[i].Question}\n`;
       //   const answer =
@@ -98,6 +107,8 @@ export const TestProvider = ({ children }) => {
 
   const value = {
     questionFiles,
+    checked,
+    setChecked: (checked) => setChecked(checked),
     answers,
     answerFiles,
     createFiles: (questions) => createFiles(questions),

@@ -1,17 +1,27 @@
-import { Input, Text, Button } from "@chakra-ui/react";
+import { Input, Text, Button, Checkbox } from "@chakra-ui/react";
 import "./App.css";
 import JSZip from "jszip";
-import React, { useState } from "react";
+import React, { useEffect, useState, useTimeout } from "react";
 import { saveAs } from "file-saver";
 import AnswerKey from "./AnswerKeys";
 import { useTest } from "./TestContext";
-import getResponse from "./chatgpt.js";
+
 function App() {
   let { questionFiles, answerFiles } = useTest();
-
+  const { checked, setChecked } = useTest();
   const { createFiles } = useTest();
   const { questions, setQuestions } = useTest();
   const [copies, setCopies] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [finished, setFinished] = useState(false);
+  useEffect(() => {
+    setChecked(0);
+  }, []);
+  const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+  const done = () => {
+    setFinished(true);
+    setLoading(false);
+  };
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
 
@@ -31,9 +41,11 @@ function App() {
     let newQuestions = [];
     let choices = [];
     for (let line of lines) {
+      console.log(line);
       line = line.trim();
 
       let type = "";
+
       if (questionRegex.test(line)) {
         type = "Question";
       } else if (choiceRegex.test(line)) {
@@ -44,7 +56,7 @@ function App() {
       }
       line = line.replace(" ", "");
       line = line.substring(line.indexOf(".") + 1);
-
+      console.log(type + ": " + line);
       if (type === "Question") {
         if (currentQuestion == null) {
           currentQuestion = line;
@@ -71,17 +83,31 @@ function App() {
     setQuestions(newQuestions);
   };
 
+  const onGenerate = async () => {
+    setLoading(true);
+    for (let i = 0; i < copies; i++) {
+      await createFiles(questions);
+    }
+
+    console.log(copies);
+    // let promise_array = Array.apply(null, Array(copies)).map(async () =>
+    //   createFiles(questions)
+    // );
+    // console.log(promise_array);
+    // await Promise.all(promise_array);
+
+    // await Promise.all(
+    //   Array(copies)
+    //     .fill()
+    //     .map(() => createFiles(questions))
+    // );
+    delay(3000 * copies);
+    done();
+  };
+
   const onButtonClick = async () => {
     let zip = new JSZip();
-
-    // for (let i = 0; i < copies; i++) {
-    //   await Promise.all[createFiles(questions)];
-    // }
-    await Promise.all(
-      Array(copies)
-        .fill()
-        .map(() => createFiles(questions))
-    );
+    console.log(questionFiles);
     for (let i = 0; i < questionFiles.length; i++) {
       let folder = zip.folder(`test${i + 2}`);
       let text = "Version: " + (i + 2) + "\n";
@@ -94,27 +120,60 @@ function App() {
     });
   };
   return (
-    <div>
-      <Text fontSize="6xl">Test Parser</Text>
-      <Input
-        label="Test File: "
-        type="file"
-        placehodler="Test"
-        onChange={handleFileUpload}
-      />
-      <AnswerKey />
-      <Input
-        label="Copies: "
-        type="number"
-        min="1"
-        max="6"
-        onChange={(e) => {
-          setCopies(e.target.value);
-        }}
-        value={copies}
-      />
+    <div className="body">
+      <div className="App">
+        <Text className="Text" fontSize="6xl">
+          Shuffly
+        </Text>
+        <label htmlFor="testFile">Upload Test File: </label>
+        <Input
+          name="testFile"
+          id="testFile"
+          accept=".txt"
+          className="Input"
+          label="Test File: "
+          type="file"
+          placehodler="Test"
+          onChange={handleFileUpload}
+        />
 
-      <Button onClick={onButtonClick}>Submit</Button>
+        <AnswerKey />
+        <label htmlFor="copies">Copies: </label>
+        <Input
+          name="copies"
+          id="copies"
+          className="Input"
+          label="Copies: "
+          type="number"
+          min="1"
+          max="6"
+          onChange={(e) => {
+            setCopies(e.target.value);
+          }}
+          value={copies}
+        />
+
+        <Checkbox
+          className="Checkbox"
+          value={checked}
+          onChange={() => {
+            checked === 0 ? setChecked(1) : setChecked(0);
+          }}
+        >
+          Rephrase Questions
+        </Checkbox>
+        {!finished && !loading && (
+          <Button colorScheme="green" className="Button" onClick={onGenerate}>
+            Generate Files
+          </Button>
+        )}
+        {loading && <Text>Generating Files...</Text>}
+        {!loading && finished && (
+          <Button colorScheme="blue" className="Button" onClick={onButtonClick}>
+            Download Files
+          </Button>
+        )}
+      </div>
     </div>
   );
 }
