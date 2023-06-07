@@ -1,23 +1,23 @@
-import { Input, Text, Button, Checkbox } from "@chakra-ui/react";
-import "./App.css";
-import JSZip from "jszip";
-import React, { useEffect, useState, useTimeout } from "react";
-import { saveAs } from "file-saver";
-import AnswerKey from "./AnswerKeys";
-import { useTest } from "./TestContext";
-import InfoModal from "./InfoModal";
+import './App.css';
+
+import {Button, Checkbox, Input, Text} from '@chakra-ui/react';
+
+import JSZip from 'jszip';
+import React, {useEffect, useState, useTimeout} from 'react';
+import {saveAs} from 'file-saver';
+import AnswerKey from './AnswerKeys';
+import {useTest} from './TestContext';
+import InfoModal from './InfoModal';
 
 function App() {
-  let { questionFiles, answerFiles } = useTest();
-  const { checked, setChecked } = useTest();
-  const { createFiles } = useTest();
-  const { questions, setQuestions } = useTest();
+  let {questionFiles, answerFiles} = useTest();
+  const {checked, setChecked} = useTest();
+  const {createFiles} = useTest();
+  const {questions, setQuestions} = useTest();
   const [copies, setCopies] = useState(1);
   const [loading, setLoading] = useState(false);
   const [finished, setFinished] = useState(false);
-  useEffect(() => {
-    setChecked(0);
-  }, []);
+  useEffect(() => { setChecked(0); }, []);
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
   const done = () => {
     setFinished(true);
@@ -27,7 +27,7 @@ function App() {
     const file = event.target.files[0];
 
     const reader = new FileReader();
-    reader.onload = async (e) => {
+    reader.onload = async(e) => {
       const contents = e.target.result;
       await parseTestFile(contents);
     };
@@ -35,7 +35,7 @@ function App() {
   };
 
   const parseTestFile = (fileContents) => {
-    const lines = fileContents.split("\n");
+    const lines = fileContents.split('\n');
     const questionRegex = /^\d+\.\s.*$/;
     const choiceRegex = /^[a-d]\.\s.*$/;
     let currentQuestion = null;
@@ -45,20 +45,20 @@ function App() {
       console.log(line);
       line = line.trim();
 
-      let type = "";
+      let type = '';
 
       if (questionRegex.test(line)) {
-        type = "Question";
+        type = 'Question';
       } else if (choiceRegex.test(line)) {
-        type = "Choice";
+        type = 'Choice';
       } else {
-        console.log("Not the proper line");
+        console.log('Not the proper line');
         continue;
       }
-      line = line.replace(" ", "");
-      line = line.substring(line.indexOf(".") + 1);
-      console.log(type + ": " + line);
-      if (type === "Question") {
+      line = line.replace(' ', '');
+      line = line.substring(line.indexOf('.') + 1);
+      console.log(type + ': ' + line);
+      if (type === 'Question') {
         if (currentQuestion == null) {
           currentQuestion = line;
         } else {
@@ -84,7 +84,7 @@ function App() {
     setQuestions(newQuestions);
   };
 
-  const onGenerate = async () => {
+  const onGenerate = async() => {
     setLoading(true);
     for (let i = 0; i < copies; i++) {
       await createFiles(questions);
@@ -106,28 +106,28 @@ function App() {
     done();
   };
 
-  const onButtonClick = async () => {
+  const onButtonClick = async() => {
     let zip = new JSZip();
     console.log(questionFiles);
     for (let i = 0; i < questionFiles.length; i++) {
       let folder = zip.folder(`test${i + 2}`);
-      let text = "Version: " + (i + 2) + "\n";
+      let text = 'Version: ' + (i + 2) + '\n';
       folder.file(`answer${i + 2}.txt`, text + answerFiles[i]);
       folder.file(`test${i + 2}.txt`, text + questionFiles[i]);
     }
 
-    zip.generateAsync({ type: "blob" }).then(function (content) {
-      saveAs(content, "tests.zip");
+    zip.generateAsync({type: 'blob'}).then(function(content) {
+      saveAs(content, 'tests.zip');
     });
   };
   return (
-    <div className="body">
-      <div className="App">
-        <Text decoration="aliceblue" className="Text" fontSize="6xl">
+    <div className='body'>
+      <div className='App'>
+        <Text decoration='aliceblue' className='Text' fontSize='6xl'>
           Shuffly
         </Text>
         <InfoModal />
-        <label htmlFor="testFile">Upload Test File: </label>
+        <label htmlFor='testFile'>Upload Test File: </label>
         <Input
           name="testFile"
           id="testFile"
@@ -140,7 +140,7 @@ function App() {
         />
 
         <AnswerKey />
-        <label htmlFor="copies">Copies: </label>
+        <label htmlFor='copies'>Copies: </label>
         <Input
           name="copies"
           id="copies"
@@ -150,16 +150,19 @@ function App() {
           min="1"
           max="6"
           onChange={(e) => {
+            if (e.target.value > 6) setCopies(6);
+            if(e.target.value < 1) setCopies(1) 
             setCopies(e.target.value);
           }}
           value={copies}
         />
 
         <Checkbox
-          className="Checkbox"
-          value={checked}
+  className = 'Checkbox'
+          value={
+    checked}
           onChange={() => {
-            checked === 0 ? setChecked(1) : setChecked(0);
+    checked === 0 ? setChecked(1) : setChecked(0);
           }}
         >
           Rephrase Questions
@@ -168,7 +171,8 @@ function App() {
           <Button colorScheme="green" className="Button" onClick={onGenerate}>
             Generate Files
           </Button>
-        )}
+        )
+}
         {loading && <Text>Generating Files...</Text>}
         {!loading && finished && (
           <Button colorScheme="blue" className="Button" onClick={onButtonClick}>
@@ -178,6 +182,6 @@ function App() {
       </div>
     </div>
   );
-}
+        }
 
-export default App;
+        export default App;
